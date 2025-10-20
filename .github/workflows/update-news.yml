@@ -1,0 +1,19 @@
+name: Update News Daily
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Runs at 2 AM UTC every day
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Update News
+        run: |
+          curl -X POST ${{ secrets.URL_NEWS }} \
+            -u ${{ secrets.ADMIN_USER_PROD }}:${{ secrets.ADMIN_PASS_PROD }} \
+            --fail \
+            --silent \
+            --show-error
